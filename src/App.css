@@ -1,0 +1,119 @@
+.App {
+  color: #ffffff;
+  width: 100%;
+  height: 100vh;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  background-image: url(./assets/bg.jpeg);
+  }
+ 
+ .card-grid {
+   display: grid;
+   grid-template-columns: repeat(4, 1fr);
+   gap: 7px;
+ }
+ 
+ .won {
+   margin-top: 40px;
+   color: white;
+   background: rgb(9, 9, 59);
+   box-shadow: 0 0 50px white;
+   padding: 0 30px;
+   animation: result .5s linear;
+    
+ }
+ @keyframes result{
+  from{
+    transform: scale(0);
+  }to{
+    transform: scale(1);
+  }
+ }
+
+.won h1{
+  animation: text 1s linear;
+}
+
+@keyframes text{
+  0%{
+    transform: scale(0);
+  }
+  100%{
+    transform: scale(1);
+  }
+}
+
+ .card {
+  width: 120px;
+  height: 120px;
+  position: relative;
+  background-color: white;
+  border: 1px solid white;
+  border-radius: 6px;
+}
+
+.card img {
+  width: 100%;
+  height: 100%;
+  border-radius: 6px;
+  display: block;
+}
+
+.card .front {
+  transform: rotateY(90deg);
+  transition: all ease-in 0.2s;
+  position: absolute;
+}
+
+.flipped .front {
+  transform: rotateY(0deg);
+  transition-delay: 0.2s;
+}
+
+.card .back {
+  height: 120px;
+  transition: all ease-in 0.2s;
+  transition-delay: 0.2s;
+}
+
+.card .back:hover{
+  cursor: pointer;
+}
+
+.flipped .back {
+  transform: rotateY(90deg);
+  transition-delay: 0s;
+}
+
+.MovesRestart{
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  gap: 260px;
+}
+
+.MovesRestart button{
+  width: 150px;
+  height: 30px;
+  border-radius: 8px;
+  border: none;
+  transition: .3s;
+  color: rgb(9, 9, 59);
+  font-weight: bold;
+}
+
+.MovesRestart button:hover{
+  background-color: rgb(12, 12, 99);
+  color: white;
+  cursor: pointer;
+}
+
+p{
+  font-size: 20px;
+  font-weight: bold;
+  background-color: rgb(9, 9, 59);
+  padding: 5PX 10PX;
+  border-radius: 8px;
+}
