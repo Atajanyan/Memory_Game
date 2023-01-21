@@ -18,7 +18,6 @@ let initialArrayCards = [
     {image:xalk,status:false},
   ]
 
-  const AllCards = [...initialArrayCards,...initialArrayCards].sort(() => Math.random() - 0.5)
-  .map(card => ({...card, id: Math.random() }))
+  const AllCards = [...initialArrayCards,...initialArrayCards]
 
   export default AllCards

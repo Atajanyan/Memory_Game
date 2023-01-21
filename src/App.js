@@ -16,7 +16,8 @@ function App() {
 
 
   const shuffls = () => {    
-    setArrayCards(AllCards)
+    setArrayCards(AllCards.sort(() => Math.random() - 0.5)
+    .map(card => ({...card, id: Math.random() })))
     setMoves(0)
     setFirstChoice(null)
     setSecondChoice(null)
