@@ -3,13 +3,13 @@ import React from 'react'
 import question from '../assets/question.png'
 
 
-function Card({ card, handleChoice, flipped, disabled }) {
+function Card({ card, handleChoice, flipped, disabled,open }) {
   const handleClick = () => {
     if(!disabled) handleChoice(card) 
 }
   return (
     <div className='card' >
-    <div className={flipped ? 'flipped' : ''} >
+    <div className={flipped||open ? 'flipped' : ''} >
     <img className='front' src={card.image} alt="" />
     <img 
     className='back' 

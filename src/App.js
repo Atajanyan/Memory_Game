@@ -1,9 +1,7 @@
-
 import './App.css'
 import {useState,useEffect} from 'react'
 import AllCards from './data'
 import Card from './components/card'
-
 
 
 function App() {
@@ -13,6 +11,7 @@ function App() {
   const [disabled, setDisabled] = useState(false)
   const [isWon, setIsWon] = useState(false)
   const [moves, setMoves] = useState(0)
+  const [isOpen,setIsOpen] = useState(false)
 
 
   const shuffls = () => {    
@@ -22,6 +21,10 @@ function App() {
     setFirstChoice(null)
     setSecondChoice(null)
     setIsWon(false)
+    setIsOpen(true)
+    setTimeout(() => {
+      setIsOpen(false)
+    }, 1500);
     arrayCards.forEach(e=>e.status = false)
   }
 
@@ -93,6 +96,7 @@ isWon ?
       key={card.id} 
       card={card} 
       handleChoice={handleChoice}
+      open={isOpen}
       flipped={card === firstChoice || card === secondChoice || card.status}
       disabled={disabled}
        /> )}
