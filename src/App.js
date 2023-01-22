@@ -1,6 +1,6 @@
 import './App.css'
 import {useState,useEffect} from 'react'
-import AllCards from './data'
+import AllCards ,{AllSecondCards}from './data'
 import Card from './components/card'
 
 
@@ -11,26 +11,39 @@ function App() {
   const [disabled, setDisabled] = useState(false)
   const [isWon, setIsWon] = useState(false)
   const [moves, setMoves] = useState(0)
+  const [wrongMoves, setWrongMoves] = useState(0)
   const [isOpen,setIsOpen] = useState(false)
+  const [nextStage,setNextStage] = useState(false)
 
 
-  const shuffls = () => {    
-    setArrayCards(AllCards.sort(() => Math.random() - 0.5)
+  const shuffls = () => { 
+    let stage = [] 
+    if(!nextStage){
+      stage = AllCards
+    }else{
+      stage = AllSecondCards
+    }  
+    setArrayCards(stage.sort(() => Math.random() - 0.5)
     .map(card => ({...card, id: Math.random() })))
     setMoves(0)
+    setWrongMoves(0)
     setFirstChoice(null)
     setSecondChoice(null)
     setIsWon(false)
     setIsOpen(true)
     setTimeout(() => {
       setIsOpen(false)
-    }, 1500);
-    arrayCards.forEach(e=>e.status = false)
+    }, nextStage?3000:1000);
+    stage.forEach(e=>e.status = false)
   }
 
   useEffect(()=>{
     shuffls()
   },[])
+
+  useEffect(()=>{
+    shuffls()
+  },[nextStage])
 
   useEffect(() => {
     let didWin = false
@@ -60,7 +73,9 @@ function App() {
           }
           return card;
         }))
-      } 
+      }else{setTimeout(() => {
+        setWrongMoves(prev=>prev+1)
+      }, 1000);} 
      setTimeout(resetMoves, 1000) 
     }
   }, [firstChoice, secondChoice])
@@ -79,19 +94,40 @@ function App() {
     setDisabled(false)
   }
 
+  const handleClick = () => {
+    shuffls()
+    setNextStage(false)
+  }
+
   return (
     <div className='App'>
     <h1>Memory Game</h1>
-    <div className='MovesRestart'>
-       <p>Moves: {moves}</p>
-       <button onClick={shuffls}>Restart Game</button>
+    <div className='moves'>
+    <p>Maximum count of wrong moves {nextStage?'of the second stage 15':'of the first stage 10'}</p>
+     <div className='MovesRestart'>
+      <p>Moves: {moves}</p>
+       <p>Wrong Moves: {wrongMoves}</p>
+       <button onClick={handleClick}>Restart Game</button>
+     </div>
     </div>
 { 
-isWon ? 
-<div className='won'><h1>Congrats! You won with {moves} turns.</h1></div> 
+isWon||(nextStage?wrongMoves===15:wrongMoves===10) ? 
+<div className='won'>
+    {
+    isWon?<div>
+      <h1>Congrats! You won{!nextStage? ' first stage ':''} with {moves} moves.</h1>
+      <h1>Wrong Moves: {wrongMoves}</h1>
+      {!nextStage?<div className='nextStage'>
+        <h2>Go to next stage</h2>
+        <button onClick={()=>setNextStage(true)}>next</button>
+        </div>:<h1>You Won</h1>}
+    </div>:
+    <h1>You lose, restart game</h1> 
+    }
+    </div>
 :
 <div className="wrapper">
-   <div className='card-grid'> 
+   <div className={nextStage?'next':'card-grid'}> 
       {arrayCards?.map(card =><Card  
       key={card.id} 
       card={card} 
