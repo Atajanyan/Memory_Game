@@ -39,10 +39,6 @@ function App() {
 
   useEffect(()=>{
     shuffls()
-  },[])
-
-  useEffect(()=>{
-    shuffls()
   },[nextStage])
 
   useEffect(() => {
